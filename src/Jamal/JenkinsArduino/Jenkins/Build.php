@@ -22,6 +22,11 @@ class Build
     {
         $this->isBuilding = (boolean) $data->building;
         $this->number     = $data->number;
+
+        if ($this->isBuilding) {
+            $data->result = BuildStatus::BUILDING;
+        }
+
         $this->status     = new BuildStatus($data->result);
     }
 
@@ -39,7 +44,7 @@ class Build
     {
         return $this->status->getCode();
     }
-    
+
     public function isBuilding()
     {
         return $this->building;
