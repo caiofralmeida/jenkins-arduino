@@ -20,10 +20,11 @@ namespace Jamal\JenkinsArduino\Serial;
       */
      public function write($path, $data)
      {
-         if (!$resource = @fopen($path, self::MODE)) {
+         if (!$resource = fopen($path, self::MODE)) {
              throw new CannotWriteException();
          }
 
          fwrite($resource, $data);
+         fclose($resource);
      }
  }
