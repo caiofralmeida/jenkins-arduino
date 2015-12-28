@@ -22,11 +22,6 @@ class Build
     {
         $this->isBuilding = (boolean) $data->building;
         $this->number     = $data->number;
-
-        if ($data->result == null) {
-            $data->result = BuildStatus::BUILDING;
-        }
-
         $this->status     = new BuildStatus($data->result);
     }
 
