@@ -23,7 +23,7 @@ class Build
         $this->isBuilding = (boolean) $data->building;
         $this->number     = $data->number;
 
-        if ($this->isBuilding) {
+        if ($data->result == null) {
             $data->result = BuildStatus::BUILDING;
         }
 
