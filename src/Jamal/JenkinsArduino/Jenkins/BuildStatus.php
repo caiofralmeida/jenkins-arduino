@@ -24,6 +24,10 @@ class BuildStatus
     public function __construct($status)
     {
         $this->status = $status;
+
+        if ($this->status == null) {
+            $this->status = self::BUILDING;
+        }
     }
 
     /**
