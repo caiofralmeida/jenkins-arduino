@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * Rename to production.php
+ */
+return [
+    'server' => 'your-jenkins-server',
+    'port'   => 80
+];
