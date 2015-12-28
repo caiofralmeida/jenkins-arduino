@@ -1,4 +1,4 @@
-# Computer Builder
+# Jenkins Arduino
 
 Objetivo: Arduino notificar o status do build configurado.
 
