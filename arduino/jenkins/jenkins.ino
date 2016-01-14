@@ -1,9 +1,21 @@
+#include <ArduinoJson.h>
+
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
 #define LED_RED 9
 #define LED_BLUE 10
 #define LED_GREEN 11
 #define BUZZER 6
 
-int data = 0, fail = 0, success = 0;
+int fail = 0, success = 0;
+
+String content;
+char character;
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+StaticJsonBuffer<300> jsonBuffer;
 
 void setup() {
   pinMode(LED_RED, OUTPUT);
@@ -12,6 +24,8 @@ void setup() {
   pinMode(BUZZER, OUTPUT);
   
   noTone(BUZZER);
+  
+  lcd.begin();
    
   Serial.begin(9600);
 }
@@ -22,40 +36,62 @@ void setup() {
  * 50 (2) - success
  * 51 (3) - unstable
  * 52 (4) - aborted
- */ 
+ */      
 void loop() {
-  if (Serial.available() > 0) {
-    data = Serial.read();
-  }
   
-  if (data == 48) {
+  content = "";
+  
+  while (Serial.available() > 0) {
+    character = Serial.read();
+    content.concat(character);
+  }
+
+  delay(500);  
+
+  JsonObject& root = jsonBuffer.parseObject(content);
+   
+  if (!root.success())
+  {
+    Serial.println(content);
+    delay(5000);
+    return;
+  }
+
+  int buildStatus = root["id"];
+  const char* message1    = root["m1"];
+  const char* message2    = root["m2"];
+
+  if (buildStatus == 0) {
     buildRunning();
   }
   
-  if (data == 49) {
-    buildFail();
+  if (buildStatus == 1) {
+    buildFail(message1, message2);
   }
   
-  if (data == 50) {
+  if (buildStatus == 2) {
     buildSuccess();
   }
   
-  if (data == 51) {
+  if (buildStatus == 3) {
     buildUnstable();
   }
   
-  if (data == 52) {
+  if (buildStatus == 4) {
     buildAborted();
   }
 }
 
 
-void buildFail() {
+void buildFail(const char* m1, const char* m2) {
    analogWrite(LED_BLUE, 0);
    analogWrite(LED_GREEN, 0);
    analogWrite(LED_RED, 255);
    
    if (fail == 0) {
+     lcd.print(m1);
+     lcd.setCursor(0,1);
+     lcd.print(m2);
      initTone(1200);
    }
    fail = 1;
@@ -75,6 +111,8 @@ void buildSuccess() {
 }
 
 void buildRunning() {
+     lcd.print("rodando build..");
+     
       analogWrite(LED_RED, 255);
       analogWrite(LED_GREEN, 255);
       analogWrite(LED_BLUE, 255);
