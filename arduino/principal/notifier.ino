@@ -58,8 +58,9 @@ class Notifier
         void buildAborted()
         {
             if (runOneTime == false) {
-              led->lightWhite();
-              buzzer->doTone(900);
+                led->lightWhite();  
+                buzzer->doTone(900, TONE_DELAY);
+                runOneTime = true;
             }
         }
 };

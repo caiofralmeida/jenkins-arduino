@@ -1,18 +1,39 @@
 RGBLed *led;
 Buzzer *buzzer;
 Notifier *notifier;
+Parser *parser;
+
+
+String content;
+char character;
+
+String statusBuild;
+String m1;
+String m2;
+
+void writeOnLcd(Parser* p) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(p->firstMessage);
+    lcd.setCursor(0, 1);
+    lcd.print(p->secondMessage);
+}
 
 void setup() {
     led    = new RGBLed(LED_RED, LED_GREEN, LED_BLUE);
     buzzer = new Buzzer(BUZZER);
     buzzer->silence();
         
-    notifier = new Notifier(buzzer, led);  
+    notifier = new Notifier(buzzer, led);
+
+    parser = new Parser();
  
-    lcd.print("Eae Samps");
-  
-  Serial.begin(9600);
+    lcd.print("Optimus");
+    lcd.setCursor(0, 1);
+    lcd.print("b4cktr4ck");
 }
+
+boolean buildRunning = false;
 
 /**
  * 48 (0) - buildng
@@ -23,46 +44,36 @@ void setup() {
  */      
 void loop() {
   
-  content = "";
-  
-  while (Serial.available() > 0) {
-    character = Serial.read();
-    content.concat(character);
-  }
+    parser->parseSerial();
+    
+    if (parser->hasData()) {
+        writeOnLcd(parser);
 
-  delay(500);  
+        if (parser->getBuildStatus() == 0) {   
+           notifier->buildRunning();
+        }
+    
+        if (parser->getBuildStatus() == 1) {
+            notifier->buildFail();
+        }
+      
+        if (parser->getBuildStatus() == 2) {
+            notifier->buildSuccess();
+        }
+      
+        if (parser->getBuildStatus() == 3) {
+            notifier->buildUnstable();
+        }
+      
+        if (parser->getBuildStatus() == 4) {
+            notifier->buildAborted();
+        }
 
-  JsonObject& root = jsonBuffer.parseObject(content);
-   
-  if (!root.success())
-  {
-    Serial.println(content);
-    delay(1000);
-    return;
-  }
-
-  int buildStatus = root["id"];
-  const char* message1    = root["m1"];
-  const char* message2    = root["m2"];
-
-  if (buildStatus == 0) {   
-     notifier->buildRunning();  
-  }
-  
-  if (buildStatus == 1) {
-    notifier->buildFail();
-  }
-  
-  if (buildStatus == 2) {
-    notifier->buildFail();
-  }
-  
-  if (buildStatus == 3) {
-    notifier->buildUnstable();
-  }
-  
-  if (buildStatus == 4) {
-    notifier->buildAborted();
-  }
+        if (parser->getBuildStatus() != 0) {
+          parser->initialize();
+          notifier->runOneTime = false;
+        }
+    }
 }
+
 
