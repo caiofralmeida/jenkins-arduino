@@ -5,5 +5,7 @@
  */
 return [
     'server' => 'your-jenkins-server',
-    'port'   => 80
+    'port'   => 80,
+    'serialType' => '/dev/ttyACM',
+    'serialCount' => 10 // total de portas USB
 ];

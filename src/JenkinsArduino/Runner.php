@@ -7,6 +7,8 @@ use Jamal\JenkinsArduino\Jenkins\Client;
 use Jamal\JenkinsArduino\Jenkins\JobConfig;
 use Jamal\JenkinsArduino\Jenkins\Credentials;
 use Jamal\JenkinsArduino\Serial\Writer as SerialWriter;
+use Jamal\JenkinsArduino\Serial\Detector;
+use Jamal\JenkinsArduino\Jenkins\ArduinoFormatter;
 
 /**
  * @author Caio Almeida <caioamd@hotmail.com>
@@ -33,8 +35,14 @@ class Runner
 
         $build = $client->doRequest($jobConfig);
 
+        $formatter = new ArduinoFormatter();
+        $data = $formatter->format($build);
+
+        $usbDetector = new Detector();
+        $usbArduino = $usbDetector->detect($config['serialType'], $config['serialCount']);
+
         $serialReader = new SerialWriter();
-        $serialReader->write('/dev/ttyACM0', $build->getStatusCode());
+        $serialReader->write($usbArduino, $data);
     }
 
     /**
@@ -42,7 +50,7 @@ class Runner
      */
     public static function getConfig()
     {
-        $path = __DIR__ . '/../../../config/production.php';
+        $path = __DIR__ . '/../../config/production.php';
 
         if (!is_readable($path)) {
             throw new Exception('O arquivo de configuração production.php não existe!');
