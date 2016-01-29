@@ -34,24 +34,22 @@ class Notifier
         {
             if (runOneTime == false) {
                 led->lightRed();
-                buzzer->doTone(1200, TONE_DELAY);
+                buzzer->doTone(500, TONE_DELAY);
                 runOneTime = true;
             }
         }
 
         void buildRunning()
         {
-            led->lightWhite();
-            delay(200);
-            led->noLight();
+            led->lightWhite(200);
+            led->noLight(200);
         }
 
         void buildUnstable()
         {
             if (runOneTime == false) {
               led->lightYellow();
-              buzzer->doTone(500, TONE_DELAY);
-              runOneTime = true;
+              buzzer->doTone(1200, TONE_DELAY);
             }
         }
 
@@ -62,6 +60,17 @@ class Notifier
                 buzzer->doTone(900, TONE_DELAY);
                 runOneTime = true;
             }
+        }
+
+        void stop()
+        {
+            buzzer->silence();
+            led->noLight();
+        }
+
+        void start()
+        {
+            runOneTime = false;
         }
 };
 

@@ -29,9 +29,9 @@ class RGBLed
           pinMode(pinBlue, OUTPUT);
       }
 
-      void noLight()
+      void noLight(int timeDelay = 0)
       {
-          analogWriter(0, 0, 0, 0);
+          analogWriter(0, 0, 0, timeDelay);
       }
       
       void lightRed(int timeDelay = 0)

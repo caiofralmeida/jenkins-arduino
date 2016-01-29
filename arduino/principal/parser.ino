@@ -16,12 +16,16 @@ class Parser
           Serial.begin(SERIAL_SPEED);
       }
 
-      void initialize()
+      void initializeData()
       {
-          bufferSize    = 0;
           statusBuild   = "";
           firstMessage  = "";
           secondMessage = "";
+      }
+
+      void initializeBufferSize()
+      {
+          bufferSize = 0;
       }
       
       void parseSerial()
