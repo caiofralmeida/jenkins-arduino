@@ -34,45 +34,50 @@ void setup() {
 }
 
 boolean buildRunning = false;
-
-/**
- * 48 (0) - buildng
- * 49 (1) - fail
- * 50 (2) - success
- * 51 (3) - unstable
- * 52 (4) - aborted
- */      
+   
 void loop() {
-  
+
     parser->parseSerial();
     
     if (parser->hasData()) {
         writeOnLcd(parser);
-
-        if (parser->getBuildStatus() == 0) {   
-           notifier->buildRunning();
-        }
     
-        if (parser->getBuildStatus() == 1) {
+        if (parser->getBuildStatus() == STATUS_BUILD_FAIL) {
             notifier->buildFail();
+            buildRunning = false;
         }
       
-        if (parser->getBuildStatus() == 2) {
+        if (parser->getBuildStatus() == STATUS_BUILD_SUCCESS) {
             notifier->buildSuccess();
+            buildRunning = false;
         }
       
-        if (parser->getBuildStatus() == 3) {
+        if (parser->getBuildStatus() == STATUS_BUILD_UNSTABLE) {
             notifier->buildUnstable();
+            buildRunning = false;
         }
       
-        if (parser->getBuildStatus() == 4) {
+        if (parser->getBuildStatus() == STATUS_BUILD_ABORTED) {
             notifier->buildAborted();
+            buildRunning = false;
         }
 
-        if (parser->getBuildStatus() != 0) {
-          parser->initialize();
-          notifier->runOneTime = false;
+        if (parser->getBuildStatus() == STATUS_BUILD_RUNNING) {
+            buildRunning = true;
         }
+
+        if (parser->getBuildStatus() == STATUS_BUILD_SHUTDOWN) {
+            buildRunning = false;
+            notifier->stop();
+        }
+
+        parser->initializeData();
+        parser->initializeBufferSize();
+        notifier->start();
+    }
+
+    if (buildRunning) {
+        notifier->buildRunning();
     }
 }
 
