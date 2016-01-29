@@ -13,7 +13,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
     public function testPassandoResourceRetornaDadoLido()
     {
-        $path = __DIR__.'/../../../resource/readertest.txt';
+        $path = __DIR__.'/../../resource/readertest.txt';
         $data = $this->reader->read($path);
 
         $this->assertEquals("hello world.\n", $data);

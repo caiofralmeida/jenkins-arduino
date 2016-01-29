@@ -4,7 +4,7 @@
 
     "autoload": {
         "psr-4": {
-            "Jamal\\": "src/Jamal"
+            "Jamal\\JenkinsArduino\\": "src/JenkinsArduino"
         }
     },
     "require-dev": {

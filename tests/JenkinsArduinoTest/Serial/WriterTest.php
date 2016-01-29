@@ -13,7 +13,7 @@ class WriterTest extends \PHPUnit_Framework_TestCase
 
     public function testPassandoResourceEscreveNoArquivo()
     {
-        $path = __DIR__ . '/../../../resource/writertest.txt';
+        $path = __DIR__ . '/../../resource/writertest.txt';
         $data = $this->writer->write($path, 'teste');
 
         $this->assertNull($data);
@@ -24,7 +24,7 @@ class WriterTest extends \PHPUnit_Framework_TestCase
      */
     public function testRetornandoExcecaoAoNaoConseguirEscreverNoResource()
     {
-        $path = __DIR__ . '/../../../resource/nopermission.txt';
+        $path = __DIR__ . '/../../resource/nopermission.txt';
         $data = $this->writer->write($path, 'teste');
     }
 }
