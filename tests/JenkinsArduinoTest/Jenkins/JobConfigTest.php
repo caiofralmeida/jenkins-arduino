@@ -32,13 +32,15 @@ class JobConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testGerandoUrlJobComCredenciais()
     {
+        $credentialsMock = $this->getMock('Jamal\JenkinsArduino\Jenkins\Credentials');
+        $credentialsMock->user = 'user';
+        $credentialsMock->password = 'password';
+
         $jobConfig = new JobConfig('My-First-Job', 'jenkins.local', 8181);
-        $jobConfig->setCredentials(
-            $this->getMock('Jamal\JenkinsArduino\Jenkins\Credentials')
-        );
+        $jobConfig->setCredentials($credentialsMock);
 
         $this->assertEquals(
-            'http://caioalmeida:bnud29@jenkins.local:8181/job/My-First-Job/lastBuild/api/json',
+            'http://user:password@jenkins.local:8181/job/My-First-Job/lastBuild/api/json',
             $jobConfig->toUrl()
         );
     }
