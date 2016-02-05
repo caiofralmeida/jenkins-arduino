@@ -1,4 +1,6 @@
 #!/bin/sh
 
 chmod -w tests/resource/nopermission.txt
-phpunit
+
+mkdir -p build/logs
+phpunit --coverage-clover build/logs/clover.xml

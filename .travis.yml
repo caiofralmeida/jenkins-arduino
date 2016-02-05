@@ -7,10 +7,13 @@ php:
   - '7.0'
 
 before_install:
- - composer --prefer-source install
+ - composer install
 
 script:
  - sh run_tests.sh
+
+after_script:
+ - php vendor/bin/coveralls -v
 
 notifications:
   email:
