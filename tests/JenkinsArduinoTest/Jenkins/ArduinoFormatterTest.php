@@ -15,6 +15,7 @@ class ArduinoFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function testPassandoTextoMenor16Bytes()
     {
+        echo 'asdas';
         $build = new \Jamal\JenkinsArduino\Jenkins\Build(
         (object)[
             'number' => 1,
@@ -41,7 +42,7 @@ class ArduinoFormatterTest extends \PHPUnit_Framework_TestCase
         $build = new \Jamal\JenkinsArduino\Jenkins\Build(
         (object)[
             'number' => 1,
-            'fullDisplayName' => 'HomoWeb #1',
+            'fullDisplayName' => 'Dev-orionweb-cartao-credito #1',
             'building' => null,
             'result' => null,
             'actions' => [
@@ -56,7 +57,7 @@ class ArduinoFormatterTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $result = $this->formatter->format($build);
-        $this->assertEquals('0|HomoWeb #1      |an SCM change   ', $result);
+        $this->assertEquals('0|artao-credito #1|an SCM change   ', $result);
     }
 
     public function testPassandoTextoMenor16BytesComUsuario()
