@@ -12,7 +12,7 @@ before_install:
 script:
  - sh run_tests.sh
 
-after_script:
+after_success:
  - php vendor/bin/coveralls -v
 
 notifications:
