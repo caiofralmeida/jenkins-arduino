@@ -32,6 +32,7 @@ class JobConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testGerandoUrlJobComCredenciais()
     {
+        
         $credentialsMock = $this->getMock('Jamal\JenkinsArduino\Jenkins\Credentials');
         $credentialsMock->user = 'user';
         $credentialsMock->password = 'password';
