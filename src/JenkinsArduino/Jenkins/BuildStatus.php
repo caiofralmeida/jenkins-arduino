@@ -4,6 +4,7 @@ namespace Jamal\JenkinsArduino\Jenkins;
 
 /**
  * @author Caio Almeida <caioamd@hotmail.com>
+ * @codeCoverageIgnore
  */
 class BuildStatus
 {

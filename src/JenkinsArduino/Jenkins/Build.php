@@ -6,6 +6,7 @@ use StdClass;
 
 /**
  * @author Caio Almeida <caioamd@hotmail.com>
+ * @codeCoverageIgnore
  */
 class Build
 {
