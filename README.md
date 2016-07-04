@@ -10,6 +10,10 @@ Tests
 ----
 [![Coverage Status](https://coveralls.io/repos/github/caiofralmeida/jenkins-arduino/badge.svg?branch=master)](https://coveralls.io/github/caiofralmeida/jenkins-arduino?branch=master)
 
+Code Quality
+------------
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/caiofralmeida/jenkins-arduino/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/caiofralmeida/jenkins-arduino/?branch=master)
+
 Status
 ----
 

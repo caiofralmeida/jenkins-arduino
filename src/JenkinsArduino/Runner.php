@@ -9,21 +9,29 @@ use Jamal\JenkinsArduino\Jenkins\Credentials;
 use Jamal\JenkinsArduino\Serial\Writer as SerialWriter;
 use Jamal\JenkinsArduino\Serial\Detector;
 use Jamal\JenkinsArduino\Jenkins\ArduinoFormatter;
+use Jamal\JenkinsArduino\Http\Request;
+use Jamal\JenkinsArduino\Validation\NotEmpty;
 
 /**
  * @author Caio Almeida <caioamd@hotmail.com>
  */
 class Runner
 {
-    const JOB_REQUEST = 'job';
-
     /**
      * Roda a aplicação
      */
     public static function run()
     {
-        if (!$job = self::getJobRequest()) {
-            die();
+        $request = new Request();
+
+        $job = $request->get('job');
+
+        $validator = new NotEmpty('job', $job);
+
+        if (!$validator->isValid()) {
+            header("HTTP/1.1 422 Unprocessable Entity", true, 422);
+            echo $validator->getMessage();
+            self::stop();
         }
 
         $config = self::getConfig();
@@ -60,15 +68,8 @@ class Runner
         return $config;
     }
 
-    /**
-     * @return string
-     */
-    public static function getJobRequest()
+    public static function stop()
     {
-        if (isset($_GET[self::JOB_REQUEST])
-            && strlen($_GET[self::JOB_REQUEST]) > 0
-        ) {
-            return $_GET[self::JOB_REQUEST];
-        }
+        die;
     }
 }

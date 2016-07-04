@@ -1,8 +1,7 @@
 <?php
 
-/**
- * Renomear para Credentials.php
- */
+namespace Jamal\JenkinsArduino\Jenkins;
+
 interface Credentials
 {
     const USER  = '';

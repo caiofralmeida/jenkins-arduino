@@ -59,6 +59,6 @@ class Build
 
     public function isBuilding()
     {
-        return $this->building;
+        return $this->isBuilding;
     }
 }
