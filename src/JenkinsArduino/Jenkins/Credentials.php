@@ -2,8 +2,8 @@
 
 namespace Jamal\JenkinsArduino\Jenkins;
 
-interface Credentials
+class Credentials
 {
-    const USER  = '';
-    const TOKEN = '';
+    public $user  = '';
+    public $token = '';
 }

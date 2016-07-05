@@ -34,7 +34,7 @@ class JobConfigTest extends \PHPUnit_Framework_TestCase
     {
         $credentialsMock = $this->getMock('Jamal\JenkinsArduino\Jenkins\Credentials');
         $credentialsMock->user = 'user';
-        $credentialsMock->password = 'password';
+        $credentialsMock->token = 'password';
 
         $jobConfig = new JobConfig('My-First-Job', 'jenkins.local', 8181);
         $jobConfig->setCredentials($credentialsMock);

@@ -64,7 +64,7 @@ class JobConfig extends StdClass
             $credentials = sprintf(
                 '%s:%s@',
                 $this->credentials->user,
-                $this->credentials->password
+                $this->credentials->token
             );
         }
 
