@@ -9,6 +9,7 @@ class WriterTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->writer = new \Jamal\JenkinsArduino\Serial\Writer();
+        chmod($this->getFilePath(), 0055);
     }
 
     public function testPassandoResourceEscreveNoArquivo()
@@ -26,5 +27,10 @@ class WriterTest extends \PHPUnit_Framework_TestCase
     {
         $path = __DIR__ . '/../../resource/nopermission.txt';
         $data = $this->writer->write($path, 'teste');
+    }
+
+    private function getFilePath()
+    {
+        return __DIR__ . '/../../resource/nopermission.txt';
     }
 }
