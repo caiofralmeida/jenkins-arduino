@@ -8,23 +8,23 @@ namespace Jamal\JenkinsArduino\Serial;
  */
 class Writer implements Writable
 {
- /**
-  * @var string
-  */
- const MODE = 'w';
+    /**
+    * @var string
+    */
+    const MODE = 'w';
 
- /**
-  * @param  string $path
-  * @param  mixed $data
-  * @return void
-  */
- public function write($path, $data)
- {
-     if (!$resource = @fopen($path, self::MODE)) {
-         throw new CannotWriteException();
-     }
+    /**
+    * @param  string $path
+    * @param  mixed $data
+    * @return void
+    */
+    public function write($path, $data)
+    {
+        if (!$resource = @fopen($path, self::MODE)) {
+            throw new CannotWriteException();
+        }
 
-     fwrite($resource, $data);
-     fclose($resource);
- }
+        fwrite($resource, $data);
+        fclose($resource);
+    }
 }
